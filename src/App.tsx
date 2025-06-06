@@ -18,6 +18,8 @@ import StudentAnalysisPage from './pages/StudentAnalysisPage';
 import UploadResumePage from './pages/UploadResumePage';
 import StudentDashboardPage from './pages/StudentDashboardPage';
 import TalentMatchingPage from './pages/TalentMatchingPage';
+import UploadPage from './pages/UploadPage';
+import ResultPage from './pages/ResultPage';
 
 function App() {
   return (
@@ -45,6 +47,10 @@ function App() {
             <Route path="/student/analysis" element={<StudentAnalysisPage />} />
             <Route path="/student/upload-resume" element={<UploadResumePage />} />
             <Route path="/student/dashboard" element={<StudentDashboardPage />} />
+            
+            {/* New Upload and Result Routes */}
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/result" element={<ResultPage />} />
             
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" />} />

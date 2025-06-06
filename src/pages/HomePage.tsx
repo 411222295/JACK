@@ -21,6 +21,10 @@ const HomePage: React.FC = () => {
     navigate('/student/register');
   };
 
+  const handleQuickUpload = () => {
+    navigate('/upload');
+  };
+
   const t = (zh: string, en: string) => (language === 'zh' ? zh : en);
 
   return (
@@ -54,14 +58,14 @@ const HomePage: React.FC = () => {
           </p>
         </div>
 
-        {/* Search Box */}
-        <div className="bg-gray-100 p-6 rounded-xl shadow-md max-w-xl w-full mb-16">
-          <input
-            type="text"
-            placeholder={t('輸入你的自我介紹...', 'Enter your introduction...')}
-            className="w-full px-4 py-3 text-gray-800 rounded-md border border-gray-300 focus:outline-none"
-          />
-          <button className="mt-4 w-full py-3 bg-gray-800 hover:bg-gray-900 rounded-md font-semibold text-white text-lg">
+        {/* Quick Upload Section */}
+        <div className="bg-gradient-to-r from-[#32ADE6] to-[#2A8BC7] p-6 rounded-xl shadow-md max-w-xl w-full mb-8">
+          <h2 className="text-white text-xl font-bold mb-2">快速開始</h2>
+          <p className="text-white/90 mb-4">上傳履歷，立即獲得職位推薦</p>
+          <button 
+            onClick={handleQuickUpload}
+            className="w-full py-3 bg-white text-[#32ADE6] rounded-md font-semibold text-lg hover:bg-gray-50 transition-colors"
+          >
             🔍 {t('馬上推薦職缺', 'Find Matching Jobs')}
           </button>
         </div>
@@ -91,7 +95,7 @@ const HomePage: React.FC = () => {
             onClick={handleCompanyClick}
             className="shadow-lg"
           >
-            <span className="text-xl">{t('我是企業主', 'I’m a Company')}</span>
+            <span className="text-xl">{t('我是企業主', 'I'm a Company')}</span>
             <ChevronRight className="ml-2" size={24} />
           </Button>
 
@@ -102,7 +106,7 @@ const HomePage: React.FC = () => {
             onClick={handleStudentClick}
             className="shadow-lg"
           >
-            <span className="text-xl">{t('我是學生', 'I’m a Student')}</span>
+            <span className="text-xl">{t('我是學生', 'I'm a Student')}</span>
             <ChevronRight className="ml-2" size={24} />
           </Button>
         </div>
