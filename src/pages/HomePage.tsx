@@ -95,8 +95,10 @@ const HomePage: React.FC = () => {
             onClick={handleCompanyClick}
             className="shadow-lg"
           >
-            <span className="text-xl">{t('我是企業主', 'I'm a Company')}</span>
-            <ChevronRight className="ml-2" size={24} />
+            <span className="text-xl">{t('我是企業主', 'I\'m a Company')}</span>
+            <ChevronRight className="ml-2\" size={24} />
+          )
+          }
           </Button>
 
           <Button
@@ -106,8 +108,10 @@ const HomePage: React.FC = () => {
             onClick={handleStudentClick}
             className="shadow-lg"
           >
-            <span className="text-xl">{t('我是學生', 'I'm a Student')}</span>
-            <ChevronRight className="ml-2" size={24} />
+            <span className="text-xl">{t('我是學生', 'I\'m a Student')}</span>
+            <ChevronRight className="ml-2\" size={24} />
+          )
+          }
           </Button>
         </div>
       </main>

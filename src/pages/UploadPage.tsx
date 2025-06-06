@@ -141,7 +141,7 @@ const UploadPage: React.FC = () => {
             {currentStep === 'resume' && (
               <div className="text-center">
                 <div className="w-20 h-20 bg-[#32ADE6]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Upload className="text-[#32ADE6]" size={40} />
+                  <Upload className="text-[#32ADE6]\" size={40} />
                 </div>
                 <h2 className="text-2xl font-semibold mb-4">上傳您的履歷</h2>
                 <p className="text-gray-600 mb-8">支持 PDF、Word 和图片格式</p>
