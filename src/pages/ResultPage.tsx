@@ -29,7 +29,8 @@ import {
   AlertCircle,
   ThumbsUp,
   ThumbsDown,
-  MessageSquareMore
+  MessageSquareMore,
+  Code
 } from 'lucide-react';
 
 interface JobMatch {
