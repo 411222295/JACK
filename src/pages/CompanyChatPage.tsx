@@ -64,6 +64,31 @@ const CompanyChatPage: React.FC = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const getErrorMessage = (status: number, language: Language) => {
+    switch (status) {
+      case 402:
+        return language === 'zh'
+          ? '⚠️ API 服務需要付費或帳戶餘額不足。請檢查 OpenRouter 帳戶狀態和 API 金鑰是否有效。'
+          : '⚠️ API service requires payment or insufficient account balance. Please check your OpenRouter account status and API key validity.';
+      case 401:
+        return language === 'zh'
+          ? '⚠️ API 金鑰無效或已過期。請檢查您的 OpenRouter API 金鑰。'
+          : '⚠️ Invalid or expired API key. Please check your OpenRouter API key.';
+      case 429:
+        return language === 'zh'
+          ? '⚠️ API 請求次數超過限制。請稍後再試。'
+          : '⚠️ API rate limit exceeded. Please try again later.';
+      case 500:
+        return language === 'zh'
+          ? '⚠️ API 服務暫時不可用。請稍後再試。'
+          : '⚠️ API service temporarily unavailable. Please try again later.';
+      default:
+        return language === 'zh'
+          ? `⚠️ API 請求失敗 (狀態碼: ${status})。請稍後再試。`
+          : `⚠️ API request failed (status: ${status}). Please try again later.`;
+    }
+  };
+
   const getAIAnalysis = async (fullData: JobData) => {
     try {
       const prompt = requiredFields.map(key => `${labels[key][language]}: ${fullData[key]}`).join('\n');
@@ -90,7 +115,8 @@ const CompanyChatPage: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        console.error(`AI Analysis API Error: ${response.status}`);
+        return language === 'zh' ? '(分析失敗，請稍後再試)' : '(Analysis failed, please try again later)';
       }
 
       const data = await response.json();
@@ -131,7 +157,9 @@ const CompanyChatPage: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        const errorMessage = getErrorMessage(response.status, language);
+        setMessages(prev => [...prev, { role: 'assistant', content: errorMessage }]);
+        return;
       }
 
       const data = await response.json();
@@ -182,15 +210,11 @@ const CompanyChatPage: React.FC = () => {
       }
     } catch (error) {
       console.error('API Error:', error);
-      setMessages(prev => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: language === 'zh'
-            ? `⚠️ 系統錯誤，請稍後再試。(${error instanceof Error ? error.message : 'Unknown error'})`
-            : `⚠️ System error. Please try again later. (${error instanceof Error ? error.message : 'Unknown error'})`,
-        },
-      ]);
+      const errorMessage = language === 'zh'
+        ? `⚠️ 網路連線錯誤，請檢查網路連線後再試。(${error instanceof Error ? error.message : 'Unknown error'})`
+        : `⚠️ Network connection error. Please check your connection and try again. (${error instanceof Error ? error.message : 'Unknown error'})`;
+      
+      setMessages(prev => [...prev, { role: 'assistant', content: errorMessage }]);
     } finally {
       setIsLoading(false);
     }
